@@ -17,9 +17,6 @@ tau_start = 0.0
 tau_sn = t_sn/t_start
 tau_end = (t_end)/t_start
 
-;NEED TO FIND ALPHA FOR THE MASS ACCRETION HISTORY
-FIND_AC_WECHS,p10,grps,rs,cvir,ac
-;print,'ac is ',ac
 
 radii_out = findgen(n_elements(Mass))
 solar_out = findgen(n_elements(Mass))
