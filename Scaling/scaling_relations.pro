@@ -19,7 +19,6 @@ tau_end = (t_end)/t_start
 
 
 radii_out = findgen(n_elements(Mass))
-solar_out = findgen(n_elements(Mass))
 
 i = 0.0
 
@@ -35,7 +34,7 @@ while i lt n_elements(Mass) do begin
 	P_scale = (L_scale)^0.4/(G^0.6 * t_scale^2.0) ;
 
 
-	lumin_params=[tau_sn,Mdm,11.0,little_h,t_start,L_scale,ac[i]]
+	lumin_params=[tau_sn,Mdm,11.0,little_h,t_start,L_scale]
 
 
 	h=0.000001
@@ -54,13 +53,7 @@ while i lt n_elements(Mass) do begin
 	;WHAT OUTPUT DO I WANT? RIGHT NOW I'LL PUT OUT PHYSICAL RADIUS
 	time_out = xp(0:end_index)
 	radii_out[i] = yp(2,end_index)*R_scale
-	;print,'radii_out here is ',radii_out[i]
 
-	;SHOULD ALSO OUTPUT METALLICITIES
-	mass_for_metals=wechs_mass(time_out,lumin_params)
-	yield = 0.01
-	METAL_WECHS,time_out,mass_for_metals,yield,lumin_params,Z_stars,Z_book,metal_mass,star_mass,gas_mass
-	solar_out[i] = alog10(Z_stars[end_index]) - alog10(0.02)
 
 	i = i + 1.0
 endwhile
