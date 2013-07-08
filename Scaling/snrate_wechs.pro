@@ -5,10 +5,7 @@ FUNCTION SNRATE_WECHS, t,lumin_params;,a,n
 	f_sn = 0.01
 	tau_sf = 1e10; yrs
 
-	func = 'wechs_mass'
-	value = call_function(func,t,lumin_params)
-
-	value = (f_sn*omega_b*value)/tau_sf
+	value = (f_sn*omega_b*lumin_params[1])/tau_sf
 
 return, value
 
