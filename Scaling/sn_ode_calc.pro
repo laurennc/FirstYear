@@ -1,4 +1,4 @@
-PRO SN_ODE_CALC,z_start,z_end,Mass,grps,radii_out,solar_out
+PRO SN_ODE_CALC,z_start,z_end,mass,f_sn,radii_out,time_out
 
 
 ;Constants
@@ -18,7 +18,7 @@ tau_sn = t_sn/t_start
 tau_end = (t_end)/t_start
 
 
-Mdm = Mass[i]
+Mdm = mass[i]
 
 ;SCALE FACTORS
 t_scale = t_start
@@ -28,13 +28,13 @@ R_scale = (L_scale)^0.2 * G^0.2 * t_scale ;kpc
 P_scale = (L_scale)^0.4/(G^0.6 * t_scale^2.0) ;
 
 
-lumin_params=[tau_sn,Mdm,11.0,little_h,t_start,L_scale,f_sfr]
+lumin_params=[tau_sn,Mdm,11.0,little_h,t_start,L_scale,f_sn]
 
 
 h=0.000001
 deriv = 'snwinds_derivs_wechs'
-xp=fltarr(350)
-yp=fltarr(3,350)
+xp=fltarr(3500)
+yp=fltarr(3,3500)
 
 initial = initial_analytic_solution(h,lumin_params)
 ystart = initial
