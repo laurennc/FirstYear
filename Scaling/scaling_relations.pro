@@ -1,62 +1,45 @@
-PRO SCALING_RELATIONS,p10,z_start,z_end,Mass,grps,radii_out,solar_out
+PRO SCALING_RELATIONS
+
+;need to decide what variables to save when I go through the loop
+;inputs
+mass = [1.0e+]
+f_sn = [0.001,0.01,0.1]
+z_start = [12, 10, 8]
+
+;end time I'll just send to the redshift of the simulation snapshot
+z_end = 7.2895
+
+i = 0
+
+while (i < n_elements(mass)) do begin
+	mass_in = mass[i]
+	j = 0
+	while (j < n_elements(f_sn)) do begin
+		f_sn_in = f_sn[j]
+		k = 0
+		while (k < n_elements(z_start)) do begin
+			z_start_in = z_start[k]
+
+			sn_ode_calc,z_start_in,z_end,mass_in,f_sn_in,radii_out,time_out
 
 
-;Constants
-L_sun = 6.3706e-21 ;solar mass kpc^2 yr^-3
-G = 4.4986e-24 ;kpc^3 yr^-2 solar mass^-1
-H_0 = 7.48609e-11;yr^-1
-little_h = 0.732
-omega_b = 0.0416
-
-
-t_start = complete_z_to_t(z_start) ;INPUT VARIABLE HERE
-t_sn = 5e7
-t_end = complete_z_to_t(z_end) - t_start
-
-tau_start = 0.0
-tau_sn = t_sn/t_start
-tau_end = (t_end)/t_start
-
-
-radii_out = findgen(n_elements(Mass))
-
-i = 0.0
-
-while i lt n_elements(Mass) do begin
-	print,'i is i',i	
-	Mdm = Mass[i]
-
-	;SCALE FACTORS
-	t_scale = t_start
-	L_scale = 1.2*L_sun*Mdm*omega_b
-	H_scale = (2.0/3.0)/(t_scale) ;yr^-1
-	R_scale = (L_scale)^0.2 * G^0.2 * t_scale ;kpc
-	P_scale = (L_scale)^0.4/(G^0.6 * t_scale^2.0) ;
-
-
-	lumin_params=[tau_sn,Mdm,11.0,little_h,t_start,L_scale]
-
-
-	h=0.000001
-	deriv = 'snwinds_derivs_wechs'
-	xp=fltarr(350)
-	yp=fltarr(3,350)
-
-	initial = initial_analytic_solution(h,lumin_params)
-	ystart = initial
-
-	odeint_snwinds,ystart,tau_start,tau_end,1e-5,h,1e-8,nok,nbad,deriv,lumin_params,xp=xp,yp=yp,count=count
-
-	finding = where(xp eq 0.0)
-	end_index = finding[1]-1.0
-
-	;WHAT OUTPUT DO I WANT? RIGHT NOW I'LL PUT OUT PHYSICAL RADIUS
-	time_out = xp(0:end_index)
-	radii_out[i] = yp(2,end_index)*R_scale
-
-
-	i = i + 1.0
+;WRITE THE OUTPUT TO A FILE FOR PLOTTING LATER
+			filein = 'scaling_'+str(mass_in)+'_'+str(f_sn_in)+'_'+str(t_start_in)+'.dat'
+			openr,1,filein			
+			count = 0
+			while (count < n_elements(radii_out)) do begin
+				output_line = [time_out[count], radii_out[count]]
+				printf,1,output_line
+				count = count + 1
+			endwhile		
+			close,1
+			
+		
+			k = k + 1
+		endwhile	
+		j = j + 1
+	endwhile
+	i = i + 1
 endwhile
 
-END
 
