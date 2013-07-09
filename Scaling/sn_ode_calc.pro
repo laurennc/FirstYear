@@ -18,7 +18,7 @@ tau_sn = t_sn/t_start
 tau_end = (t_end)/t_start
 
 
-Mdm = mass[i]
+Mdm = mass
 
 ;SCALE FACTORS
 t_scale = t_start

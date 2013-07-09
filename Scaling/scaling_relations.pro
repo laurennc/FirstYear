@@ -1,5 +1,7 @@
 PRO SCALING_RELATIONS
 
+!path=EXPAND_PATH('+/home/lauren/idl')+':'+!path
+
 ;need to decide what variables to save when I go through the loop
 ;inputs
 mass = [1.0e+]
@@ -11,13 +13,13 @@ z_end = 7.2895
 
 i = 0
 
-while (i < n_elements(mass)) do begin
+;while (i < n_elements(mass)) do begin
 	mass_in = mass[i]
 	j = 0
-	while (j < n_elements(f_sn)) do begin
+;	while (j < n_elements(f_sn)) do begin
 		f_sn_in = f_sn[j]
 		k = 0
-		while (k < n_elements(z_start)) do begin
+;		while (k < n_elements(z_start)) do begin
 			z_start_in = z_start[k]
 
 			sn_ode_calc,z_start_in,z_end,mass_in,f_sn_in,radii_out,time_out
