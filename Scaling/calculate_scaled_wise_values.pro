@@ -51,7 +51,7 @@ while i lt n_elements(Mass) do begin
 
         finding = where(xp eq 0.0)
         end_index = finding[1]-1.0
-		time_out = xp(0:end_index)
+		time_out = xp(end_index)
         radii_out[i] = yp(2,end_index)*R_scale
         
         ;SHOULD ALSO OUTPUT METALLICITIES
