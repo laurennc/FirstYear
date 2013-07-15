@@ -1,5 +1,4 @@
-PRO CALCULATE_SCALED_WISE_VALUES,t_start,Mass,time_out,radii_out
-
+PRO CALCULATE_SCALED_WISE_VALUES,t_start_in,Mass,time_out,radii_out
 
 ;Constants
 L_sun = 6.3706e-21 ;solar mass kpc^2 yr^-3
@@ -18,8 +17,9 @@ i = 0.0
 while i lt n_elements(Mass) do begin
         print,'i is i',i
         Mdm = Mass[i]
-
-		t_start = complete_z_to_t(z_start) ;INPUT VARIABLE HERE
+		t_start = t_start_in[i]
+		
+		
 		t_sn = 5e7
 		t_end = complete_z_to_t(7.2895) - t_start
 
